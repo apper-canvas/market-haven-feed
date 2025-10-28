@@ -1,0 +1,57 @@
+[
+  {
+    "Id": 1,
+    "productId": "1",
+    "rating": 5,
+    "title": "Excellent sound quality!",
+    "comment": "These headphones exceeded my expectations. The noise cancellation is fantastic and the battery life is amazing.",
+    "reviewerName": "Sarah M.",
+    "date": "2024-01-25T15:30:00Z",
+    "verified": true,
+    "helpfulVotes": 23
+  },
+  {
+    "Id": 2,
+    "productId": "1",
+    "rating": 4,
+    "title": "Great headphones, minor issues",
+    "comment": "Love the sound quality and comfort. Only complaint is that they're a bit heavy for extended wear.",
+    "reviewerName": "David K.",
+    "date": "2024-01-22T10:15:00Z",
+    "verified": true,
+    "helpfulVotes": 15
+  },
+  {
+    "Id": 3,
+    "productId": "3",
+    "rating": 5,
+    "title": "Perfect basic tee",
+    "comment": "Soft, comfortable, and well-made. The organic cotton feels great and the fit is perfect.",
+    "reviewerName": "Emily R.",
+    "date": "2024-01-20T14:22:00Z",
+    "verified": true,
+    "helpfulVotes": 31
+  },
+  {
+    "Id": 4,
+    "productId": "4",
+    "rating": 5,
+    "title": "Professional quality knife",
+    "comment": "This knife is incredibly sharp and well-balanced. A game-changer for my cooking!",
+    "reviewerName": "Chef Tom",
+    "date": "2024-01-18T16:45:00Z",
+    "verified": true,
+    "helpfulVotes": 42
+  },
+  {
+    "Id": 5,
+    "productId": "5",
+    "rating": 4,
+    "title": "Good skincare set",
+    "comment": "Nice products with visible results after a few weeks. The serum is my favorite part of the set.",
+    "reviewerName": "Lisa W.",
+    "date": "2024-01-16T12:30:00Z",
+    "verified": false,
+    "helpfulVotes": 18
+  }
+]

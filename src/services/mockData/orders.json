@@ -1,0 +1,103 @@
+[
+  {
+    "Id": 1,
+    "orderId": "MH-2024-001",
+    "orderDate": "2024-01-28T10:30:00Z",
+    "items": [
+      {
+        "productId": "1",
+        "quantity": 1,
+        "selectedSize": null,
+        "selectedColor": "Black",
+        "price": 199.99
+      },
+      {
+        "productId": "3",
+        "quantity": 2,
+        "selectedSize": "M",
+        "selectedColor": "White",
+        "price": 29.99
+      }
+    ],
+    "subtotal": 259.97,
+    "tax": 20.80,
+    "shipping": 9.99,
+    "total": 290.76,
+    "status": "delivered",
+    "shippingAddress": {
+      "name": "John Doe",
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "NY",
+      "zip": "10001",
+      "country": "USA"
+    },
+    "paymentMethod": "Credit Card ending in 4242",
+    "trackingNumber": "1Z999AA1234567890"
+  },
+  {
+    "Id": 2,
+    "orderId": "MH-2024-002",
+    "orderDate": "2024-01-30T14:15:00Z",
+    "items": [
+      {
+        "productId": "8",
+        "quantity": 1,
+        "selectedSize": "Standard",
+        "selectedColor": "Purple",
+        "price": 49.99
+      }
+    ],
+    "subtotal": 49.99,
+    "tax": 4.00,
+    "shipping": 5.99,
+    "total": 59.98,
+    "status": "shipped",
+    "shippingAddress": {
+      "name": "Jane Smith",
+      "street": "456 Oak Avenue",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90210",
+      "country": "USA"
+    },
+    "paymentMethod": "PayPal",
+    "trackingNumber": "1Z999BB9876543210"
+  },
+  {
+    "Id": 3,
+    "orderId": "MH-2024-003",
+    "orderDate": "2024-02-01T09:45:00Z",
+    "items": [
+      {
+        "productId": "11",
+        "quantity": 3,
+        "selectedSize": "12oz",
+        "selectedColor": null,
+        "price": 24.99
+      },
+      {
+        "productId": "4",
+        "quantity": 1,
+        "selectedSize": "8 inch",
+        "selectedColor": "Silver",
+        "price": 89.99
+      }
+    ],
+    "subtotal": 164.96,
+    "tax": 13.20,
+    "shipping": 7.99,
+    "total": 186.15,
+    "status": "processing",
+    "shippingAddress": {
+      "name": "Mike Johnson",
+      "street": "789 Pine Street",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601",
+      "country": "USA"
+    },
+    "paymentMethod": "Credit Card ending in 1234",
+    "trackingNumber": null
+  }
+]
