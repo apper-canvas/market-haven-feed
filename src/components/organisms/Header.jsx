@@ -44,7 +44,7 @@ const Header = () => {
             </Link>
             
             {/* Categories Dropdown */}
-            <div 
+<div 
               className="relative"
               onMouseEnter={() => setShowCategoryDropdown(true)}
               onMouseLeave={() => setShowCategoryDropdown(false)}
