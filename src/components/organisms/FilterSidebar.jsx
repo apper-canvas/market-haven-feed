@@ -1,37 +1,49 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setPriceRange,
-  toggleBrand,
-  setMinRating,
-  setInStockOnly,
-  clearFilters,
-  setCategory,
-} from "@/store/filtersSlice";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { productService } from "@/services/api/productService";
+import * as categoryService from "@/services/api/categoryService";
+import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Checkbox from "@/components/atoms/Checkbox";
 import PriceRange from "@/components/molecules/PriceRange";
 import StarRating from "@/components/molecules/StarRating";
-import { productService } from "@/services/api/productService";
-import { categories } from "@/services/mockData/categories.json";
-import ApperIcon from "@/components/ApperIcon";
-
+import { 
+  clearFilters, 
+  setCategory, 
+  setInStockOnly, 
+  setMinRating, 
+  setPriceRange, 
+  toggleBrand 
+} from "@/store/filtersSlice";
 const FilterSidebar = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
   const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     loadBrands();
+    loadCategories();
   }, []);
 
-  const loadBrands = async () => {
+  const loadCategories = async () => {
+    try {
+      const categoryList = await categoryService.getAll();
+      setCategories(categoryList || []);
+    } catch (error) {
+      console.error("Error loading categories:", error);
+      setCategories([]);
+    }
+  };
+const loadBrands = async () => {
     try {
       const products = await productService.getAll();
-      const uniqueBrands = [...new Set(products.map(p => p.brand))].sort();
+      const validProducts = products?.filter(p => p?.brand) || [];
+      const uniqueBrands = [...new Set(validProducts.map(p => p.brand))].sort();
       setBrands(uniqueBrands);
     } catch (error) {
       console.error("Error loading brands:", error);
+      setBrands([]);
     }
   };
 
@@ -53,24 +65,24 @@ const FilterSidebar = ({ isOpen, onClose }) => {
         </Button>
       </div>
 
-      {/* Categories */}
+{/* Categories */}
       <div className="space-y-3">
         <h4 className="font-medium text-gray-900">Categories</h4>
         <div className="space-y-2">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <button
-              key={category.Id}
+              key={category?.Id || category?.id}
               onClick={() => dispatch(setCategory(
-                filters.category === category.name ? "" : category.name
+                filters.category === category?.name ? "" : category?.name
               ))}
               className={`w-full flex items-center gap-2 p-2 rounded-lg transition-colors duration-200 ${
-                filters.category === category.name
+                filters.category === category?.name
                   ? "bg-primary/10 text-primary"
                   : "text-gray-700 hover:bg-gray-50"
               }`}
             >
-              <ApperIcon name={category.icon} size={16} />
-              <span className="text-sm">{category.name}</span>
+              <ApperIcon name={category?.icon || "Box"} size={16} />
+              <span className="text-sm">{category?.name || "Unknown"}</span>
             </button>
           ))}
         </div>
@@ -84,15 +96,15 @@ const FilterSidebar = ({ isOpen, onClose }) => {
         />
       </div>
 
-      {/* Brands */}
+{/* Brands */}
       <div className="space-y-3">
         <h4 className="font-medium text-gray-900">Brands</h4>
         <div className="space-y-2 max-h-48 overflow-y-auto">
-          {brands.map((brand) => (
+          {brands?.map((brand) => (
             <Checkbox
               key={brand}
               label={brand}
-              checked={filters.brands.includes(brand)}
+              checked={filters?.brands?.includes(brand) || false}
               onChange={() => dispatch(toggleBrand(brand))}
             />
           ))}
