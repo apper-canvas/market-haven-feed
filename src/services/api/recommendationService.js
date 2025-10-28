@@ -63,14 +63,13 @@ export const getUserRecommendations = async (userId, limit = 6) => {
     }
 
     // Extract category preferences from order history
-    const orderedProductIds = [];
+const orderedProductIds = [];
     ordersResponse.data.forEach(order => {
       if (order.product_ids_c) {
         const ids = order.product_ids_c.split(',').map(id => parseInt(id.trim()));
         orderedProductIds.push(...ids);
       }
     });
-});
 
     if (orderedProductIds.length === 0) {
       return getTrendingProducts(limit);
