@@ -1,10 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ApperIcon from "@/components/ApperIcon";
-import SearchBar from "@/components/molecules/SearchBar";
-import CartBadge from "@/components/molecules/CartBadge";
 import { categories } from "@/services/mockData/categories.json";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Wishlist from "@/components/pages/Wishlist";
+import Home from "@/components/pages/Home";
+import Cart from "@/components/pages/Cart";
+import Orders from "@/components/pages/Orders";
+import CartBadge from "@/components/molecules/CartBadge";
+import SearchBar from "@/components/molecules/SearchBar";
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -35,6 +40,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
+{/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
             <Link 
               to="/" 
@@ -44,44 +50,33 @@ const Header = () => {
             </Link>
             
             {/* Categories Dropdown */}
-<div 
-              className="relative"
-              onMouseEnter={() => setShowCategoryDropdown(true)}
-              onMouseLeave={() => setShowCategoryDropdown(false)}
-            >
+            <div className="relative group">
               <button className="flex items-center gap-1 text-gray-700 hover:text-primary font-medium transition-colors duration-200">
                 Categories
                 <ApperIcon name="ChevronDown" size={16} />
               </button>
-              
-              {showCategoryDropdown && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-surface rounded-lg shadow-lg border border-gray-100 py-2 z-50">
-                  {categories.map((category) => (
-                    <button
-                      key={category.Id}
-                      onClick={() => handleCategoryClick(category.name)}
-                      className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors duration-200 flex items-center gap-2"
-                    >
-                      <ApperIcon name={category.icon} size={16} />
-                      {category.name}
-                    </button>
-                  ))}
-                </div>
-              )}
+              <div className="hidden group-hover:block absolute top-full left-0 mt-2 w-64 bg-surface rounded-lg shadow-lg border border-gray-100 py-2 z-50">
+                {categories.map(category => (
+                  <button
+                    key={category.id}
+                    onClick={() => {
+                      navigate(`/category/${category.slug}`);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors duration-200 flex items-center gap-2"
+                  >
+                    <ApperIcon name={category.icon} size={16} />
+                    <span className="text-sm">{category.name}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </nav>
 
-          {/* Desktop Search */}
-          <div className="hidden lg:block flex-1 max-w-lg mx-8">
-            <SearchBar />
-          </div>
-
-          {/* Desktop Actions */}
+          {/* Desktop Icons */}
           <div className="hidden lg:flex items-center gap-4">
-            <Link
-              to="/wishlist"
-              className="relative p-2 text-gray-700 hover:text-primary transition-colors duration-200"
-            >
+            <SearchBar />
+            
+            <Link to="/wishlist" className="relative p-2 text-gray-700 hover:text-primary transition-colors duration-200">
               <ApperIcon name="Heart" size={24} />
               {wishlistCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-secondary text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -102,7 +97,6 @@ const Header = () => {
             >
               <ApperIcon name="Package" size={24} />
             </Link>
-          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -132,11 +126,11 @@ const Header = () => {
                 Home
               </Link>
               
-              <div className="space-y-2">
+<div className="space-y-2">
                 <div className="font-medium text-gray-900">Categories</div>
                 {categories.map((category) => (
                   <button
-                    key={category.Id}
+                    key={category.id}
                     onClick={() => handleCategoryClick(category.name)}
                     className="block w-full text-left py-2 pl-4 text-gray-600 flex items-center gap-2"
                   >
