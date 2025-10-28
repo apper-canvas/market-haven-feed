@@ -70,11 +70,11 @@ export const getUserRecommendations = async (userId, limit = 6) => {
         orderedProductIds.push(...ids);
       }
     });
+});
 
     if (orderedProductIds.length === 0) {
       return getTrendingProducts(limit);
     }
-
     // Fetch products similar to previously ordered items
     const productsResponse = await apperClient.fetchRecords('product_c', {
       fields: [
@@ -233,11 +233,16 @@ export const getRelatedProducts = async (productId, limit = 4) => {
   } catch (error) {
     console.error('Error fetching related products:', error.message);
     return [];
-  }
+}
 };
-// Export only the working API-based functions
-// Note: The service already has complete implementations of:
-// - getTrendingProducts (lines 11-39)
-// - getUserRecommendations (lines 42-111)
-// - getRecommendations (lines 114-179)
-// - getRelatedProducts (lines 182-241)
+
+// Service object export for component consumption
+export const recommendationService = {
+  getPersonalizedRecommendations: async (limit = 6) => {
+    return await getUserRecommendations(null, limit);
+  },
+  getUserRecommendations,
+  getTrendingProducts,
+  getRecommendations,
+  getRelatedProducts
+};
