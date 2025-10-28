@@ -91,12 +91,13 @@ const Header = () => {
               </CartBadge>
             </Link>
             
-            <Link
+<Link
               to="/orders"
               className="p-2 text-gray-700 hover:text-primary transition-colors duration-200"
             >
               <ApperIcon name="Package" size={24} />
             </Link>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
