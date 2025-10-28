@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setCategory, setSortBy } from "@/store/filtersSlice";
-import ProductGrid from "@/components/organisms/ProductGrid";
-import FilterSidebar from "@/components/organisms/FilterSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import * as categoryService from "@/services/api/categoryService";
+import ApperIcon from "@/components/ApperIcon";
+import Badge from "@/components/atoms/Badge";
 import Select from "@/components/atoms/Select";
 import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
-import ApperIcon from "@/components/ApperIcon";
+import ProductGrid from "@/components/organisms/ProductGrid";
+import FilterSidebar from "@/components/organisms/FilterSidebar";
 import { getActiveFiltersCount } from "@/utils/productFilters";
-import { categories } from "@/services/mockData/categories.json";
+import { setCategory, setSortBy } from "@/store/filtersSlice";
 
 const Category = () => {
   const { categoryName } = useParams();
@@ -21,7 +21,7 @@ const Category = () => {
   const activeFiltersCount = getActiveFiltersCount(filters);
   
   // Find category info
-  const categoryInfo = categories.find(cat => 
+const categoryInfo = categoryService.categories.find(cat => 
     cat.name.toLowerCase().replace(/\s+/g, "-") === categoryName
   );
 
