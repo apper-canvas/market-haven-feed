@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { categories } from "@/services/mockData/categories.json";
+import * as categoryService from "@/services/api/categoryService";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Wishlist from "@/components/pages/Wishlist";
@@ -14,12 +14,26 @@ import SearchBar from "@/components/molecules/SearchBar";
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   
   const wishlistCount = useSelector((state) => state.wishlist.productIds.length);
   const cartItemsCount = useSelector((state) => 
     state.cart.items.reduce((total, item) => total + item.quantity, 0)
   );
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    try {
+      const data = await categoryService.getAll();
+      setCategories(data);
+    } catch (err) {
+      console.error("Error loading categories:", err);
+    }
+  };
 
   const handleCategoryClick = (categoryName) => {
     navigate(`/category/${categoryName.toLowerCase().replace(/\s+/g, "-")}`);
@@ -55,10 +69,10 @@ const Header = () => {
                 Categories
                 <ApperIcon name="ChevronDown" size={16} />
               </button>
-              <div className="hidden group-hover:block absolute top-full left-0 mt-2 w-64 bg-surface rounded-lg shadow-lg border border-gray-100 py-2 z-50">
+<div className="hidden group-hover:block absolute top-full left-0 mt-2 w-64 bg-surface rounded-lg shadow-lg border border-gray-100 py-2 z-50">
                 {categories.map(category => (
                   <button
-                    key={category.id}
+                    key={category.Id}
                     onClick={() => {
                       navigate(`/category/${category.slug}`);
                     }}
@@ -131,7 +145,7 @@ const Header = () => {
                 <div className="font-medium text-gray-900">Categories</div>
                 {categories.map((category) => (
                   <button
-                    key={category.id}
+                    key={category.Id}
                     onClick={() => handleCategoryClick(category.name)}
                     className="block w-full text-left py-2 pl-4 text-gray-600 flex items-center gap-2"
                   >

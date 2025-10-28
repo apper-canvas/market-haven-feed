@@ -1,16 +1,32 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCategory } from "@/store/filtersSlice";
-import ProductGrid from "@/components/organisms/ProductGrid";
+import * as categoryService from "@/services/api/categoryService";
+import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Card from "@/components/atoms/Card";
-import ApperIcon from "@/components/ApperIcon";
-import { categories } from "@/services/mockData/categories.json";
+import ProductGrid from "@/components/organisms/ProductGrid";
+import { setCategory } from "@/store/filtersSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
 
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    try {
+      const data = await categoryService.getAll();
+      setCategories(data);
+    } catch (err) {
+      console.error("Error loading categories:", err);
+    } finally {
+      setCategoriesLoading(false);
+    }
+  };
   const handleCategoryClick = (categoryName) => {
     dispatch(setCategory(categoryName));
   };
@@ -60,11 +76,11 @@ const Home = () => {
           </Link>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {categories.map((category) => (
+<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          {!categoriesLoading && categories.map((category) => (
             <Link
               key={category.Id}
-              to={`/category/${category.name.toLowerCase().replace(/\s+/g, "-")}`}
+              to={`/category/${category.slug}`}
               onClick={() => handleCategoryClick(category.name)}
             >
               <Card className="p-6 text-center hover:shadow-card-hover transition-all duration-200 group">
